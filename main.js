@@ -21,18 +21,26 @@
   except for when the player wins, else; player wins!
  */
 
-let choices = ["rock", "paper", "scissors"]
+const CHOICES = ["rock", "paper", "scissors"]
+const ROUNDS = 5
 
 function computerChoice() {  // Computer chooses random RPS value from array
-    return choices[(Math.floor(Math.random() * choices.length))]
+    return CHOICES[(Math.floor(Math.random() * CHOICES.length))]
 }
 
 function playerChoice() {  // Player makes a choice
-    return prompt("What will you play? Rock, Paper or Scissors?").toLowerCase()
-    // TODO input sanitization - ensure value chosen is in choices array
+    let playerInput = prompt("What will you play? Rock, Paper or Scissors?").toLowerCase()
+
+    if (!CHOICES.includes(playerInput)) {
+        console.log("That is not a valid input!")
+        playerChoice()
+
+    } else {
+        return playerInput
+    }
 }
 
-function getGameResult(player, computer) {
+function playRound(player, computer) {
     console.log(`Player chose ${player}`)
     console.log(`Computer chose ${computer}`)
 
@@ -44,14 +52,29 @@ function getGameResult(player, computer) {
         computer === "scissors" && player === "paper"
     ) {
         console.log(`Computer wins, ${computer} beats ${player}!`)
+        return "cwin"
     } else {
         console.log(`You win, ${player} beats ${computer}!`)
+        return "pwin"
     }
+}
+function playGame() {
+    let playerScore = 0
+    let computerScore = 0
+
+    for (let i = 0; i < ROUNDS; i++) {
+        let round = playRound(playerChoice(), computerChoice())
+        if (round === "pwin") {
+            playerScore++
+        } else if (round === "cwin") {
+            computerScore++
+        }
+    }
+
+    let winner = (playerScore > computerScore ? "Player" : "Computer")
+    console.log(`The winner of this round is ${winner}!!!\nComputer: ${computerScore}\nPlayer: ${playerScore}`)
 }
 
 // MAIN LOGIC
-for (let i = 0; i < 3; i++) {
-    getGameResult(playerChoice(), computerChoice())
-}
-
+playGame()
 
