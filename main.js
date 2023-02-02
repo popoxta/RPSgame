@@ -28,19 +28,21 @@ function computerChoice() {  // Computer chooses random RPS value from array
     return CHOICES[(Math.floor(Math.random() * CHOICES.length))]
 }
 
-function playerChoice() {  // Player makes a choice
-    let playerInput = prompt("What will you play? Rock, Paper or Scissors?").toLowerCase()
+// function playerChoice() {  // Player makes a choice
+//     let playerInput = prompt("What will you play? Rock, Paper or Scissors?").toLowerCase()
+//
+//     if (!CHOICES.includes(playerInput)) {
+//         console.log("That is not a valid input!")
+//         playerChoice()
+//
+//     } else {
+//         return playerInput
+//     }
+// }
 
-    if (!CHOICES.includes(playerInput)) {
-        console.log("That is not a valid input!")
-        playerChoice()
+function playRound(player) {
+    let computer = computerChoice()
 
-    } else {
-        return playerInput
-    }
-}
-
-function playRound(player, computer) {
     console.log(`Player chose ${player}`)
     console.log(`Computer chose ${computer}`)
 
@@ -58,23 +60,52 @@ function playRound(player, computer) {
         return "pwin"
     }
 }
-function playGame() {
-    let playerScore = 0
-    let computerScore = 0
-
-    for (let i = 0; i < ROUNDS; i++) {
-        let round = playRound(playerChoice(), computerChoice())
-        if (round === "pwin") {
-            playerScore++
-        } else if (round === "cwin") {
-            computerScore++
-        }
-    }
-
-    let winner = (playerScore > computerScore ? "Player" : "Computer")
-    console.log(`The winner of this round is ${winner}!!!\nComputer: ${computerScore}\nPlayer: ${playerScore}`)
-}
+// function playGame() {
+//     let playerScore = 0
+//     let computerScore = 0
+//
+//     for (let i = 0; i < ROUNDS; i++) {
+//         let round = playRound(playerChoice(), computerChoice())
+//         if (round === "pwin") {
+//             playerScore++
+//         } else if (round === "cwin") {
+//             computerScore++
+//         }
+//     }
+//
+//     let winner = (playerScore > computerScore ? "Player" : "Computer")
+//     console.log(`The winner of this round is ${winner}!!!\nComputer: ${computerScore}\nPlayer: ${playerScore}`)
+// }
 
 // MAIN LOGIC
-playGame()
+// playGame()
+
+// const rockBtn = document.getElementById('rock')
+// const paperBtn = document.getElementById('paper')
+// const scissorsBtn = document.getElementById('scissors')
+
+/*
+get all buttons as a list
+
+
+ */
+//retrieve buttons
+const buttons = document.querySelectorAll('button')
+
+//play a single round, player input via button.
+buttons.forEach(button => button.addEventListener('click', (e)=>{
+    playRound(e.target.id)
+}))
+
+
+
+
+
+
+
+
+
+
+
+
 
