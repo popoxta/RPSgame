@@ -1,111 +1,71 @@
 /*
- -------------- RPS GAME --------------
- In the main game LOOP vvvv
- Computer chooses random value (R, P, S) - stored in computerChoice (function) DONE
- Player can choose a value via input (ROCK, PAPER, SCISSORS) - stored in playerChoice (function) DONE
+While the game is playing;
 
- The result is evaluated vvv
+    Get the value of the button pressed
+    Check to see if the computer or player won the round
+    Get the result of the round
+    and keep going!
 
- paper beats rock
- rock beats scissor
- scissor beats paper
+If the computer or player reaches a score of 5,
+the game should end - buttons should no longer work
+the winner will be announced :-)
 
- ITS A DRAW IF...
- computerchoice === playerchoice
-
- COMPUTER WINS IF..
- if computerchoice is paper and playerchoice is rock, so on so on for all conds. :-]
-
-  PLAYER WINS IF...
-  since all conditions are covered (draw, computer wins.. etc)
-  except for when the player wins, else; player wins!
  */
-
 const CHOICES = ["rock", "paper", "scissors"]
-const ROUNDS = 5
+const WIN_SCORE = 5
 
 function computerChoice() {  // Computer chooses random RPS value from array
     return CHOICES[(Math.floor(Math.random() * CHOICES.length))]
 }
-
-// function playerChoice() {  // Player makes a choice
-//     let playerInput = prompt("What will you play? Rock, Paper or Scissors?").toLowerCase()
-//
-//     if (!CHOICES.includes(playerInput)) {
-//         console.log("That is not a valid input!")
-//         playerChoice()
-//
-//     } else {
-//         return playerInput
-//     }
-// }
-
-function playRound(player) {
-    let computer = computerChoice()
-
-    console.log(`Player chose ${player}`)
-    console.log(`Computer chose ${computer}`)
+function getResult(player) {
+    const computer = computerChoice()
 
     if (player === computer) {
-        console.log("It's a draw!")
+        updateResults("It's a draw!")
     } else if (
         computer === "paper" && player === "rock" ||
         computer === "rock" && player === "scissors" ||
         computer === "scissors" && player === "paper"
     ) {
-        console.log(`Computer wins, ${computer} beats ${player}!`)
-        return "cwin"
+        updateResults(`Computer wins, ${computer} beats ${player}!`)
+        return false
     } else {
-        console.log(`You win, ${player} beats ${computer}!`)
-        return "pwin"
+        updateResults(`You win, ${player} beats ${computer}!`)
+        return true
     }
 }
-// function playGame() {
-//     let playerScore = 0
-//     let computerScore = 0
-//
-//     for (let i = 0; i < ROUNDS; i++) {
-//         let round = playRound(playerChoice(), computerChoice())
-//         if (round === "pwin") {
-//             playerScore++
-//         } else if (round === "cwin") {
-//             computerScore++
-//         }
-//     }
-//
-//     let winner = (playerScore > computerScore ? "Player" : "Computer")
-//     console.log(`The winner of this round is ${winner}!!!\nComputer: ${computerScore}\nPlayer: ${playerScore}`)
-// }
+function updateResults(text) {
+    const resultsBox = document.getElementById('results-box')
+    const gameResult = resultsBox.children[1]
+    gameResult.textContent = text
+}
+function getWinner(playerScore, computerScore){
 
-// MAIN LOGIC
-// playGame()
+    (playerScore > computerScore) ? updateResults(`You won ${playerScore} to ${computerScore}!`) :
+        updateResults(`You lost! ${playerScore} to ${computerScore}!`)
+}
 
-// const rockBtn = document.getElementById('rock')
-// const paperBtn = document.getElementById('paper')
-// const scissorsBtn = document.getElementById('scissors')
+function playGame() {
+    let playerScore = 0
+    let computerScore = 0
 
-/*
-get all buttons as a list
+    const buttons = document.querySelectorAll('button')
+    buttons.forEach(button => button.addEventListener('click', function playRound(e) {
 
+        if (playerScore >= WIN_SCORE || computerScore >= WIN_SCORE) {
+            buttons.forEach(button => button.removeEventListener('click', playRound))
+            getWinner(playerScore, computerScore)
 
- */
-//retrieve buttons
-const buttons = document.querySelectorAll('button')
+        } else {
 
-//play a single round, player input via button.
-buttons.forEach(button => button.addEventListener('click', (e)=>{
-    playRound(e.target.id)
-}))
+            if (getResult(e.target.id)) {
+                playerScore++
+            } else {
+                computerScore++
+            }
 
+        }}
+    ))
+}
 
-
-
-
-
-
-
-
-
-
-
-
+playGame()
