@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <title>RPS Game</title>
     <script src="main.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="header">
-    <h1>RPS GAME</h1>
+    <h1 class="transition">RPS GAME</h1>
 </div>
-
-<div id="results-box">
-    <h2>The result is...</h2>
-    <h3 id="result">Awaiting the game...</h3>
+<div class="content">
+    <div id="results-score">
+        <h3 id="score">&nbsp;</h3>
+    </div>
+    <div id="results-text-box">
+        <h2 id="result">Awaiting your move</h2>
+    </div>
+    <div class="choice-buttons">
+        <button class="game-button transition" id="rock">ROCK</button>
+        <button class="game-button transition" id="paper">PAPER</button>
+        <button class="game-button transition" id="scissors">SCISSORS</button>
+    </div>
+    <div class="again-button">
+        <button class="transition bigger" id="play-again">Play Again?</button>
+    </div>
 </div>
-<div id="choice-buttons">
-    <button id="rock">ROCK</button>
-    <button id="paper">PAPER</button>
-    <button id="scissors">SCISSORS</button>
-</div>
-
 </body>
 </html>
